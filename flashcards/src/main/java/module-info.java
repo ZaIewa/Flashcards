@@ -12,6 +12,6 @@ module com.example.flashcards {
     requires java.sql;
     requires mysql.connector.java;
 
-    opens com.example.flashcards to javafx.fxml;
-    exports com.example.flashcards;
+    opens flashcards_p to javafx.fxml;
+    exports flashcards_p;
 }
