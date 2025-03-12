@@ -23,7 +23,6 @@ public class MainController {
 
     InsertData insertData = new InsertData();
     GetData getData = new GetData();
-    Separator separator = new Separator(Orientation.HORIZONTAL);
 
 
     @FXML
