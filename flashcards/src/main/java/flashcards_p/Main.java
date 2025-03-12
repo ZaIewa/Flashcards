@@ -1,4 +1,4 @@
-package com.example.flashcards;
+package flashcards_p;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
