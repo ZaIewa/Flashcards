@@ -8,6 +8,7 @@
     <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="600.0">
          <children>
             <VBox fx:id="mainVbox" prefHeight="400.0" prefWidth="600.0" />
-         </children></AnchorPane>
+         </children>
+    </AnchorPane>
   </content>
 </ScrollPane>
