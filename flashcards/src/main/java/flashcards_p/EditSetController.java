@@ -22,6 +22,7 @@ public class EditSetController {
 
     InsertData insertData = new InsertData();
     GetData getData = new GetData();
+    DeleteData deleteData = new DeleteData();
 
 
     @FXML
@@ -52,7 +53,14 @@ public class EditSetController {
             row.getChildren().add(enLabel);
 
             Button deleteButton = new Button("Delete");
-            //deleteButton.setOnAction(event -> {});
+            int finalI = i;
+            deleteButton.setOnAction(event -> {
+                try {
+                    deleteData.delete("fiszki", ar[0][finalI], ar[1][finalI]);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             deleteButton.prefWidthProperty().set(60);
             row.getChildren().add(deleteButton);
             /*
