@@ -9,7 +9,7 @@ public class GetData {
 
     GetData() {}
 
-    public String[][] get() throws SQLException {
+    public String[][] get(String setName) throws SQLException {
         String[][] data = null;
         try {
             // Driver required for connection to database
@@ -21,11 +21,10 @@ public class GetData {
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
-            String sql = "Select pl, ang from fiszki";
+            String sql = "Select Polish_word, English_word from " + setName;
 
             ResultSet rs = stmt.executeQuery(sql);
             ResultSetMetaData rsmd = rs.getMetaData();
-            System.out.println("querying SELECT pl, ang FROM fiszki");
 
             // Used to find out dimensions of array
             int columnsNumber = rsmd.getColumnCount();
@@ -41,10 +40,10 @@ public class GetData {
 
 
             while (rs.next()) {
-                data[0][rowsNumber] = rs.getString("pl");
-                System.out.println(rs.getString("pl"));
-                data[1][rowsNumber] = rs.getString("ang");
-                System.out.println(rs.getString("ang"));
+                data[0][rowsNumber] = rs.getString("Polish_word");
+                System.out.println(rs.getString("Polish_word"));
+                data[1][rowsNumber] = rs.getString("English_word");
+                System.out.println(rs.getString("English_word"));
                 rowsNumber++;
             }
 

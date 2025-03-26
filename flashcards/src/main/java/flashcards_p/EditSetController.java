@@ -7,9 +7,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class EditSetController {
+
+    private String SetName;
 
     @FXML
     private ScrollPane mainPane;
@@ -24,15 +27,17 @@ public class EditSetController {
     GetData getData = new GetData();
     DeleteData deleteData = new DeleteData();
 
+    public void setSetName(String SetName) {
+        this.SetName = SetName;
+    }
 
     @FXML
     protected void onAddButtonClick() {
         insertData.insert(leftField.getText(), rightField.getText());
     }
 
-    @FXML
-    protected void initialize() throws SQLException {
-        String[][] ar = getData.get();
+    protected void loadEditSet() throws SQLException {
+        String[][] ar = getData.get(SetName);
         mainVBox.getChildren().clear();
 
         for(int i = 0; i<ar[0].length; i++) {
@@ -56,7 +61,7 @@ public class EditSetController {
             int finalI = i;
             deleteButton.setOnAction(event -> {
                 try {
-                    deleteData.delete("fiszki", ar[0][finalI], ar[1][finalI]);
+                    deleteData.delete(SetName, ar[0][finalI], ar[1][finalI]);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

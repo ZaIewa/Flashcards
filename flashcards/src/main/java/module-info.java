@@ -11,6 +11,7 @@ module com.example.flashcards {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires mysql.connector.java;
+    requires java.desktop;
 
     opens flashcards_p to javafx.fxml;
     exports flashcards_p;

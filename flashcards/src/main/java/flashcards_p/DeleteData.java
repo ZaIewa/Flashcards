@@ -19,7 +19,7 @@ public class DeleteData {
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
-            String sql = "DELETE FROM " + tablename + " WHERE ang = '" + ang + "' AND pl = '" + pl + "'";
+            String sql = "DELETE FROM " + tablename + " WHERE English_word = '" + ang + "' AND Polish_word = '" + pl + "'";
             stmt.executeUpdate(sql);
 
 
