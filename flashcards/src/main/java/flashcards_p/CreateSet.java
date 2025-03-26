@@ -1,17 +1,17 @@
 package flashcards_p;
 
-import java.sql.*;
+import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Set;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-public class InsertData {
+public class CreateSet {
     Connection con = null;
     Statement stmt = null;
 
-    InsertData() {}
+    CreateSet() {}
 
-    // Inserts into respective set a new row
-    public void insert(String SetName, String pl, String ang){
+    public void create(String name){
         try{
             // Driver required for connection to database
             Class.forName("com.mysql.jdbc.Driver");
@@ -20,9 +20,13 @@ public class InsertData {
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
-            String sql = "INSERT INTO "+ SetName +"(Polish_word,English_word)" + "VALUES('" + pl + "','" + ang + "')";
+
+            // Creates new table and adds it's name to table "names" so it could be found easier.
+            String sql = "CREATE TABLE `" + name +"` (`Id` INT NOT NULL AUTO_INCREMENT , `Polish_word` CHAR(50) NOT NULL , `English_word` CHAR(50) NOT NULL , PRIMARY KEY (`Id`))";
             stmt.executeUpdate(sql);
-            
+            sql = "INSERT INTO names(Name)" + "VALUES('" + name + "')";
+            stmt.executeUpdate(sql);
+
         }catch(SQLException se){
             se.printStackTrace();
         }catch(Exception e){

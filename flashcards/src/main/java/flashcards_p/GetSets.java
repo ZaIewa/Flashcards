@@ -1,17 +1,17 @@
 package flashcards_p;
 
 import java.sql.*;
-import java.sql.DriverManager;
 
-public class GetData {
+public class GetSets {
+
     Connection con = null;
     Statement stmt = null;
 
-    GetData() {}
+    GetSets() {}
 
-    // Gets all rows of Polish and English words from given set and puts it into an array with String[0][i] being Polish words and String[1][i] being English words
-    public String[][] get(String setName) throws SQLException {
-        String[][] data = null;
+    // Returns names off all sets/tables
+    public String[] get() throws SQLException {
+        String[] sets = null;
         try {
             // Driver required for connection to database
             Class.forName("com.mysql.jdbc.Driver");
@@ -20,30 +20,25 @@ public class GetData {
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
-            String sql = "Select Polish_word, English_word from " + setName;
+            String sql = "Select Name from names";
 
             ResultSet rs = stmt.executeQuery(sql);
-            ResultSetMetaData rsmd = rs.getMetaData();
 
-            // Used to find out dimensions of array
-            int columnsNumber = rsmd.getColumnCount();
-            int rowsNumber = 0;
+            int setNumber = 0;
             while (rs.next()) {
-                rowsNumber++;
+                setNumber++;
             }
 
-            data = new String[columnsNumber][rowsNumber];
-            rowsNumber = 0;
+            sets = new String[setNumber];
+            setNumber = 0;
             // Resets the cursor before first entry
             rs.beforeFirst();
 
-            // Assigns words from table to respective places in array
+            // Adds names of sets from table into an array
             while (rs.next()) {
-                data[0][rowsNumber] = rs.getString("Polish_word");
-                //System.out.println(rs.getString("Polish_word"));
-                data[1][rowsNumber] = rs.getString("English_word");
-                //System.out.println(rs.getString("English_word"));
-                rowsNumber++;
+                sets[setNumber] = rs.getString("Name");
+                System.out.println(rs.getString("Name"));
+                setNumber++;
             }
 
 
@@ -68,6 +63,7 @@ public class GetData {
                 se.printStackTrace();
             }
         }
-        return data;
+        return sets;
     }
 }
+
