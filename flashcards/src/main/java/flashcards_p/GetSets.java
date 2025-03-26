@@ -9,6 +9,7 @@ public class GetSets {
 
     GetSets() {}
 
+    // Returns names off all sets/tables
     public String[] get() throws SQLException {
         String[] sets = null;
         try {
@@ -22,7 +23,6 @@ public class GetSets {
             String sql = "Select Name from names";
 
             ResultSet rs = stmt.executeQuery(sql);
-            ResultSetMetaData rsmd = rs.getMetaData();
 
             int setNumber = 0;
             while (rs.next()) {
@@ -34,7 +34,7 @@ public class GetSets {
             // Resets the cursor before first entry
             rs.beforeFirst();
 
-
+            // Adds names of sets from table into an array
             while (rs.next()) {
                 sets[setNumber] = rs.getString("Name");
                 System.out.println(rs.getString("Name"));

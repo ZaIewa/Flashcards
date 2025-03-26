@@ -9,15 +9,14 @@ public class GetData {
 
     GetData() {}
 
+    // Gets all rows of Polish and English words from given set and puts it into an array with String[0][i] being Polish words and String[1][i] being English words
     public String[][] get(String setName) throws SQLException {
         String[][] data = null;
         try {
             // Driver required for connection to database
             Class.forName("com.mysql.jdbc.Driver");
-            //System.out.println("Connecting to database...");
             // Setting up the connection with url, user, password
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "");
-            //System.out.println("Connected");
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
@@ -38,12 +37,12 @@ public class GetData {
             // Resets the cursor before first entry
             rs.beforeFirst();
 
-
+            // Assigns words from table to respective places in array
             while (rs.next()) {
                 data[0][rowsNumber] = rs.getString("Polish_word");
-                System.out.println(rs.getString("Polish_word"));
+                //System.out.println(rs.getString("Polish_word"));
                 data[1][rowsNumber] = rs.getString("English_word");
-                System.out.println(rs.getString("English_word"));
+                //System.out.println(rs.getString("English_word"));
                 rowsNumber++;
             }
 

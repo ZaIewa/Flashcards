@@ -20,6 +20,8 @@ public class CreateSet {
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
+
+            // Creates new table and adds it's name to table "names" so it could be found easier.
             String sql = "CREATE TABLE `" + name +"` (`Id` INT NOT NULL AUTO_INCREMENT , `Polish_word` CHAR(50) NOT NULL , `English_word` CHAR(50) NOT NULL , PRIMARY KEY (`Id`))";
             stmt.executeUpdate(sql);
             sql = "INSERT INTO names(Name)" + "VALUES('" + name + "')";

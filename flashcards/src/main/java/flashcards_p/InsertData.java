@@ -2,6 +2,7 @@ package flashcards_p;
 
 import java.sql.*;
 import java.sql.DriverManager;
+import java.util.Set;
 
 public class InsertData {
     Connection con = null;
@@ -9,7 +10,8 @@ public class InsertData {
 
     InsertData() {}
 
-    public void insert(String pl, String ang){
+    // Give
+    public void insert(String SetName, String pl, String ang){
         try{
             // Driver required for connection to database
             Class.forName("com.mysql.jdbc.Driver");
@@ -18,7 +20,7 @@ public class InsertData {
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
-            String sql = "INSERT INTO fiszki(pl,ang)" + "VALUES('" + pl + "','" + ang + "')";
+            String sql = "INSERT INTO "+ SetName +"(Polish_word,English_word)" + "VALUES('" + pl + "','" + ang + "')";
             stmt.executeUpdate(sql);
             
         }catch(SQLException se){

@@ -31,20 +31,26 @@ public class EditSetController {
         this.SetName = SetName;
     }
 
+    // On button press adds data from text fields into current table.
     @FXML
     protected void onAddButtonClick() {
-        insertData.insert(leftField.getText(), rightField.getText());
+        insertData.insert(SetName,leftField.getText(), rightField.getText());
     }
 
+    // Initializes the whole scene. Didn't use initialize function because had to set the name of a set of flashcards before loading the scene.
     protected void loadEditSet() throws SQLException {
+
+        // Gets all rows of Polish and English words from given table
         String[][] ar = getData.get(SetName);
         mainVBox.getChildren().clear();
 
+        // Creates rows of Polish and English words with separators and button to delete a row
         for(int i = 0; i<ar[0].length; i++) {
             mainPane.setFitToWidth(true);
             HBox row = new HBox();
             mainVBox.getChildren().add(row);
 
+            // Adds Polish word as 1st object
             Label plLabel = new Label(ar[0][i]);
             plLabel.prefWidthProperty().bind(row.widthProperty().divide(2).subtract(40));
             plLabel.setAlignment(Pos.CENTER);
@@ -52,11 +58,13 @@ public class EditSetController {
 
             row.getChildren().add(new Separator(Orientation.VERTICAL));
 
+            // Adds English word as 3rd object
             Label enLabel = new Label(ar[1][i]);
             enLabel.setAlignment(Pos.CENTER);
             enLabel.prefWidthProperty().bind(row.widthProperty().divide(2).subtract(40));
             row.getChildren().add(enLabel);
 
+            // Adds button that will delete corresponding row from table/set.
             Button deleteButton = new Button("Delete");
             int finalI = i;
             deleteButton.setOnAction(event -> {
@@ -68,12 +76,6 @@ public class EditSetController {
             });
             deleteButton.prefWidthProperty().set(60);
             row.getChildren().add(deleteButton);
-            /*
-            row.getChildren().add(new Label(ar[0][i]));
-            row.getChildren().add(new Separator(Orientation.VERTICAL));
-            row.getChildren().add(new Label(ar[1][i]));
-            row.getChildren().add(new Separator(Orientation.VERTICAL));
-            row.getChildren().add(new Button("Delete"));*/
 
             mainVBox.getChildren().add(new Separator(Orientation.HORIZONTAL));
         }

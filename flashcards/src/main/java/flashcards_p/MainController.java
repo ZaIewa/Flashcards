@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,8 +14,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -36,16 +33,21 @@ public class MainController {
     @FXML
     public void initialize() throws SQLException {
         mainPane.setFitToWidth(true);
+        // Gets names of all sets of flashcards
         String[] sets = getSet.get();
         mainVbox.getChildren().clear();
+
+        // Creates rows with set names, edit and delete buttons
         for(int i = 0; i<sets.length; i++) {
             HBox hBoxMain = new HBox();
             hBoxMain.setPadding(new Insets(20,20,20,20));
 
+            // Creates containers for names
             HBox hBoxNames = new HBox();
             hBoxNames.setMinWidth(280);
             hBoxNames.setSpacing(20);
 
+            // Creates containers for buttons
             HBox hBoxButtons = new HBox();
             hBoxButtons.setMinWidth(280);
             hBoxButtons.setSpacing(20);
@@ -58,9 +60,9 @@ public class MainController {
             Label label = new Label(sets[i]);
             hBoxNames.getChildren().add(label);
 
+            // Creates Edit buttons that on press change scene to edit-set-view.fxml of respective set
             Button editbutton = new Button();
             editbutton.setText("Edit");
-
             int finalI = i;
             editbutton.setOnAction(e -> {
                 try {
@@ -70,6 +72,7 @@ public class MainController {
                 }
             });
 
+            // Creates Delete buttons that on press will delete respective set of flashcards
             hBoxButtons.getChildren().add(editbutton);
             Button deletebutton = new Button();
             deletebutton.setText("Delete");
@@ -81,6 +84,7 @@ public class MainController {
 
     }
 
+    // Switches scene into edit-scene-view.fxml and runs methods to set up the scene.
     public void switchToEditSet(String SetName) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit-set-view.fxml"));
         root = fxmlLoader.load();

@@ -12,13 +12,13 @@ public class DeleteData {
         try {
             // Driver required for connection to database
             Class.forName("com.mysql.jdbc.Driver");
-            //System.out.println("Connecting to database...");
             // Setting up the connection with url, user, password
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "");
-            //System.out.println("Connected");
 
             // Creating an object that allows to insert SQL commands
             stmt = con.createStatement();
+
+            // Deletes a row from given table with matching words
             String sql = "DELETE FROM " + tablename + " WHERE English_word = '" + ang + "' AND Polish_word = '" + pl + "'";
             stmt.executeUpdate(sql);
 
