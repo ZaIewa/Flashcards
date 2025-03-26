@@ -34,7 +34,7 @@ public class EditSetController {
     // On button press adds data from text fields into current table.
     @FXML
     protected void onAddButtonClick() {
-        insertData.insert(SetName,leftField.getText(), rightField.getText());
+        insertData.insert(SetName, leftField.getText(), rightField.getText());
     }
 
     // Initializes the whole scene. Didn't use initialize function because had to set the name of a set of flashcards before loading the scene.

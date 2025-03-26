@@ -10,7 +10,7 @@ public class InsertData {
 
     InsertData() {}
 
-    // Give
+    // Inserts into respective set a new row
     public void insert(String SetName, String pl, String ang){
         try{
             // Driver required for connection to database

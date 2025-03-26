@@ -16,7 +16,7 @@
                         <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
                         <TextField fx:id="rightField" layoutX="236.0" layoutY="48.0" promptText="English word" />
                         <Separator layoutX="307.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
-                        <Button mnemonicParsing="false" text="Add" />
+                        <Button mnemonicParsing="false" onAction="#onAddButtonClick" text="Add" />
                      </children>
                   </HBox>
                   <VBox fx:id="mainVBox" prefHeight="200.0" prefWidth="100.0" />
