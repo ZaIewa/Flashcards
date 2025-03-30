@@ -20,6 +20,7 @@ import java.sql.SQLException;
 public class MainController {
 
     GetSets getSet = new GetSets();
+    DeleteSet deleteSet = new DeleteSet();
 
     private Stage stage;
     private Scene scene;
@@ -76,7 +77,7 @@ public class MainController {
             hBoxButtons.getChildren().add(editbutton);
             Button deletebutton = new Button();
             deletebutton.setText("Delete");
-            //deletebutton.setOnAction(e -> {})
+            deletebutton.setOnAction(e -> {deleteSet.delete(sets[finalI]);});
             hBoxButtons.getChildren().add(deletebutton);
 
             mainVbox.getChildren().add(new Separator(Orientation.HORIZONTAL));
