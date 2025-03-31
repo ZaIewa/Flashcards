@@ -7,7 +7,17 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="600.0">
          <children>
-            <VBox fx:id="mainVbox" prefHeight="400.0" prefWidth="600.0" />
+            <VBox prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER" minHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="textField" promptText="Set Name" />
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
+                        <Button mnemonicParsing="false" onAction="#onAddButtonPress" text="Add Set" />
+                     </children></HBox>
+                  <Separator prefWidth="200.0" />
+                  <VBox fx:id="mainVbox" prefHeight="200.0" prefWidth="100.0" />
+               </children></VBox>
          </children>
     </AnchorPane>
   </content>
