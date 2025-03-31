@@ -14,6 +14,7 @@ public class Reloader {
     private Scene scene;
     private Parent root;
 
+    // Requires fxml file as sceneName, and Stage usually from "(Stage)mainPane.getScene().getWindow()" line. Loads different scene
     public void reload(String sceneName, Stage _stage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
         root = fxmlLoader.load();

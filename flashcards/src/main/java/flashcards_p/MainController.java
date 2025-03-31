@@ -68,7 +68,7 @@ public class MainController {
             int finalI = i;
             editbutton.setOnAction(e -> {
                 try {
-                    this.switchToEditSet(sets[finalI]);
+                    reloader.reloadEditSet(sets[finalI], (Stage)mainPane.getScene().getWindow());
                 } catch (IOException | SQLException ex) {
                     throw new RuntimeException(ex);
                 }
