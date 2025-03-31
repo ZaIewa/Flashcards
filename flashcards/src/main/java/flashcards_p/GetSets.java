@@ -37,7 +37,7 @@ public class GetSets {
             // Adds names of sets from table into an array
             while (rs.next()) {
                 sets[setNumber] = rs.getString("Name");
-                System.out.println(rs.getString("Name"));
+                //System.out.println(rs.getString("Name"));
                 setNumber++;
             }
 
