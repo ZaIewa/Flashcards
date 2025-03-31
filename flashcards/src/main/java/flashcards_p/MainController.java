@@ -1,5 +1,6 @@
 package flashcards_p;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -7,10 +8,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,6 +20,7 @@ public class MainController {
     GetSets getSet = new GetSets();
     DeleteSet deleteSet = new DeleteSet();
     Reloader reloader = new Reloader();
+    CreateSet createSet = new CreateSet();
 
     private Stage stage;
     private Scene scene;
@@ -31,6 +30,8 @@ public class MainController {
     private ScrollPane mainPane;
     @FXML
     private VBox mainVbox;
+    @FXML
+    private TextField textField;
 
     @FXML
     public void initialize() throws SQLException {
@@ -95,6 +96,11 @@ public class MainController {
 
     }
 
+    public void onAddButtonPress(ActionEvent actionEvent) throws SQLException, IOException {
+        createSet.create(textField.getText());
+        reloader.reload("main-view.fxml", (Stage)mainPane.getScene().getWindow());
+    }
+
     // Switches scene into edit-scene-view.fxml and runs methods to set up the scene.
     public void switchToEditSet(String SetName) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit-set-view.fxml"));
@@ -108,6 +114,5 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
-
 
 }
