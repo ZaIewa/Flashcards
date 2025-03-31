@@ -96,6 +96,7 @@ public class MainController {
 
     }
 
+    // Creates new set & reloads the scene to show it
     public void onAddButtonPress(ActionEvent actionEvent) throws SQLException, IOException {
         createSet.create(textField.getText());
         reloader.reload("main-view.fxml", (Stage)mainPane.getScene().getWindow());
