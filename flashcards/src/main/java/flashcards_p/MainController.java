@@ -21,6 +21,7 @@ public class MainController {
 
     GetSets getSet = new GetSets();
     DeleteSet deleteSet = new DeleteSet();
+    Reloader reloader = new Reloader();
 
     private Stage stage;
     private Scene scene;
@@ -77,7 +78,16 @@ public class MainController {
             hBoxButtons.getChildren().add(editbutton);
             Button deletebutton = new Button();
             deletebutton.setText("Delete");
-            deletebutton.setOnAction(e -> {deleteSet.delete(sets[finalI]);});
+            deletebutton.setOnAction(e -> {
+                deleteSet.delete(sets[finalI]);
+                try {
+                    reloader.reload("main-view.fxml", (Stage)mainPane.getScene().getWindow());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
             hBoxButtons.getChildren().add(deletebutton);
 
             mainVbox.getChildren().add(new Separator(Orientation.HORIZONTAL));

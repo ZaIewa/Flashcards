@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,6 +27,7 @@ public class EditSetController {
     InsertData insertData = new InsertData();
     GetData getData = new GetData();
     DeleteData deleteData = new DeleteData();
+    Reloader reloader = new Reloader();
 
     public void setSetName(String SetName) {
         this.SetName = SetName;
@@ -33,8 +35,9 @@ public class EditSetController {
 
     // On button press adds data from text fields into current table.
     @FXML
-    protected void onAddButtonClick() {
+    protected void onAddButtonClick() throws SQLException, IOException {
         insertData.insert(SetName, leftField.getText(), rightField.getText());
+        reloader.reloadEditSet(SetName, (Stage)mainPane.getScene().getWindow());
     }
 
     // Initializes the whole scene. Didn't use initialize function because had to set the name of a set of flashcards before loading the scene.
