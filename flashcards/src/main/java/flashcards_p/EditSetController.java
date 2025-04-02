@@ -28,16 +28,18 @@ public class EditSetController {
     GetData getData = new GetData();
     DeleteData deleteData = new DeleteData();
     Reloader reloader = new Reloader();
+    SetNameSingleton setNameSingleton = SetNameSingleton.getInstance();
 
-    public void setSetName(String SetName) {
-        this.SetName = SetName;
-    }
+//    public void setSetName(String SetName) {
+//        this.SetName = SetName;
+//    }
 
     // On button press adds data from text fields into current table.
     @FXML
     protected void onAddButtonClick() throws SQLException, IOException {
         insertData.insert(SetName, leftField.getText(), rightField.getText());
-        reloader.reloadEditSet(SetName, (Stage)mainPane.getScene().getWindow());
+        setNameSingleton.setSetName(SetName);
+        reloader.reload("edit-set-view.fxml", (Stage)mainPane.getScene().getWindow());
     }
 
     // On button press goes back to main view
@@ -47,7 +49,8 @@ public class EditSetController {
     }
 
     // Initializes the whole scene. Didn't use initialize function because had to set the name of a set of flashcards before loading the scene.
-    protected void loadEditSet() throws SQLException {
+    public void initialize() throws SQLException {
+        SetName = setNameSingleton.getSetName();
 
         // Gets all rows of Polish and English words from given table
         String[][] ar = getData.get(SetName);
@@ -79,7 +82,8 @@ public class EditSetController {
             deleteButton.setOnAction(event -> {
                 try {
                     deleteData.delete(SetName, ar[0][finalI], ar[1][finalI]);
-                    reloader.reloadEditSet(SetName, (Stage)mainPane.getScene().getWindow());
+                    setNameSingleton.setSetName(SetName);
+                    reloader.reload("edit-set-view.fxml", (Stage)mainPane.getScene().getWindow());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {

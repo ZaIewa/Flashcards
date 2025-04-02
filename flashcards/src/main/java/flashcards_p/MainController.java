@@ -21,6 +21,7 @@ public class MainController {
     DeleteSet deleteSet = new DeleteSet();
     Reloader reloader = new Reloader();
     CreateSet createSet = new CreateSet();
+    SetNameSingleton setNameSingleton = SetNameSingleton.getInstance();
 
     private Stage stage;
     private Scene scene;
@@ -69,7 +70,8 @@ public class MainController {
             int finalI = i;
             editbutton.setOnAction(e -> {
                 try {
-                    reloader.reloadEditSet(sets[finalI], (Stage)mainPane.getScene().getWindow());
+                    setNameSingleton.setSetName(sets[finalI]);
+                    reloader.reload("edit-set-view.fxml", (Stage)mainPane.getScene().getWindow());
                 } catch (IOException | SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -100,20 +102,6 @@ public class MainController {
     public void onAddButtonPress(ActionEvent actionEvent) throws SQLException, IOException {
         createSet.create(textField.getText());
         reloader.reload("main-view.fxml", (Stage)mainPane.getScene().getWindow());
-    }
-
-    // Switches scene into edit-scene-view.fxml and runs methods to set up the scene.
-    public void switchToEditSet(String SetName) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit-set-view.fxml"));
-        root = fxmlLoader.load();
-        EditSetController editSetController = fxmlLoader.<EditSetController>getController();
-        editSetController.setSetName(SetName);
-        editSetController.loadEditSet();
-
-        stage = (Stage)mainPane.getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
 }
