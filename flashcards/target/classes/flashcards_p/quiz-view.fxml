@@ -2,16 +2,30 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards_p.QuizViewController">
    <children>
-      <HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
+      <VBox prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Button mnemonicParsing="false" text="Show Polish" />
-            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
-            <Button mnemonicParsing="false" text="Show English" />
+            <HBox alignment="CENTER" prefHeight="200.0" prefWidth="600.0">
+               <children>
+                  <Label fx:id="Prompt" text="Label">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="600.0">
+               <children>
+                  <TextField fx:id="AnswerField" promptText="Answer" />
+                  <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" />
+                  <Button onAction="#onSubmitButtonPress" mnemonicParsing="false" text="Submit" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>
