@@ -4,8 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class QuizViewController {
@@ -15,12 +19,16 @@ public class QuizViewController {
     private int iterator;
     private Random rand = new Random();
     private int randomIndex;
-    private int correctAnswer = 0;
     private String[][] ar;
+    private ArrayList<String[]> correctAnswers = new ArrayList<String[]>();
+    private ArrayList<String[]> wrongAnswers = new ArrayList<String[]>();
 
     DataSingleton dataSingleton = DataSingleton.getInstance();
     GetData getData = new GetData();
+    Reloader reloader = new Reloader();
 
+    @FXML
+    private AnchorPane mainPane;
     @FXML
     private Label Prompt;
     @FXML
@@ -40,15 +48,19 @@ public class QuizViewController {
         }
     }
 
-    public void onSubmitButtonPress(ActionEvent actionEvent) {
+    public void onSubmitButtonPress(ActionEvent actionEvent) throws SQLException, IOException {
         String answer = AnswerField.getText();
         if (language.equals("Polish")) {
             if (answer.equals(ar[1][randomIndex])) {
-                correctAnswer += 1;
+                correctAnswers.add(new String[]{ar[0][randomIndex], ar[1][randomIndex]});
+            } else{
+                wrongAnswers.add(new String[]{ar[0][randomIndex], ar[1][randomIndex]});
             }
         }else{
             if (answer.equals(ar[0][randomIndex])) {
-                correctAnswer += 1;
+                correctAnswers.add(new String[]{ar[0][randomIndex], ar[1][randomIndex]});
+            } else{
+                wrongAnswers.add(new String[]{ar[0][randomIndex], ar[1][randomIndex]});
             }
         }
 
@@ -56,7 +68,9 @@ public class QuizViewController {
         ar[1][randomIndex] = ar[1][iterator-1];
         iterator--;
         if (iterator == 0) {
-            Prompt.setText(String.valueOf(correctAnswer));
+            dataSingleton.setCorrectAnswers(correctAnswers);
+            dataSingleton.setWrongAnswers(wrongAnswers);
+            reloader.reload("result-view.fxml", (Stage)mainPane.getScene().getWindow());
         }else{
             randomIndex = rand.nextInt(iterator);
             if (language.equals("Polish")) {

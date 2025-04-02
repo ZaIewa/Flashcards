@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards_p.ResultViewController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <HBox prefHeight="150.0" prefWidth="600.0">
+                     <children>
+                        <Button onAction="#onBackButtonPress" mnemonicParsing="false" text="Back" />
+                        <VBox alignment="CENTER" prefHeight="150.0" prefWidth="550.0">
+                           <children>
+                              <Label fx:id="percent" text="\%">
+                                 <font>
+                                    <Font size="32.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="points" text="points/maxpoints">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox fx:id="correctBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="300.0">
+                           <children>
+                              <Label text="Correct:" />
+                           </children></VBox>
+                        <VBox fx:id="wrongBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="300.0">
+                           <children>
+                              <Label text="Wrong:" />
+                           </children></VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+  </content>
+</ScrollPane>

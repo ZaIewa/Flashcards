@@ -1,6 +1,7 @@
 package flashcards_p;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -54,8 +55,11 @@ public class EditSetController {
 
         // Creates rows of Polish and English words with separators and button to delete a row
         for(int i = 0; i<ar[0].length; i++) {
+            // Gets rid of bottom scroll
             mainPane.setFitToWidth(true);
+
             HBox row = new HBox();
+            row.setPadding(new Insets(0,20,0,0));
             mainVBox.getChildren().add(row);
 
             // Adds Polish word as 1st object
