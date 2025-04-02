@@ -1,6 +1,7 @@
 package flashcards_p;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -28,16 +29,14 @@ public class EditSetController {
     GetData getData = new GetData();
     DeleteData deleteData = new DeleteData();
     Reloader reloader = new Reloader();
-
-    public void setSetName(String SetName) {
-        this.SetName = SetName;
-    }
+    DataSingleton dataSingleton = DataSingleton.getInstance();
 
     // On button press adds data from text fields into current table.
     @FXML
     protected void onAddButtonClick() throws SQLException, IOException {
         insertData.insert(SetName, leftField.getText(), rightField.getText());
-        reloader.reloadEditSet(SetName, (Stage)mainPane.getScene().getWindow());
+        dataSingleton.setSetName(SetName);
+        reloader.reload("edit-set-view.fxml", (Stage)mainPane.getScene().getWindow());
     }
 
     // On button press goes back to main view
@@ -47,7 +46,8 @@ public class EditSetController {
     }
 
     // Initializes the whole scene. Didn't use initialize function because had to set the name of a set of flashcards before loading the scene.
-    protected void loadEditSet() throws SQLException {
+    public void initialize() throws SQLException {
+        SetName = dataSingleton.getSetName();
 
         // Gets all rows of Polish and English words from given table
         String[][] ar = getData.get(SetName);
@@ -55,8 +55,11 @@ public class EditSetController {
 
         // Creates rows of Polish and English words with separators and button to delete a row
         for(int i = 0; i<ar[0].length; i++) {
+            // Gets rid of bottom scroll
             mainPane.setFitToWidth(true);
+
             HBox row = new HBox();
+            row.setPadding(new Insets(0,20,0,0));
             mainVBox.getChildren().add(row);
 
             // Adds Polish word as 1st object
@@ -79,7 +82,8 @@ public class EditSetController {
             deleteButton.setOnAction(event -> {
                 try {
                     deleteData.delete(SetName, ar[0][finalI], ar[1][finalI]);
-                    reloader.reloadEditSet(SetName, (Stage)mainPane.getScene().getWindow());
+                    dataSingleton.setSetName(SetName);
+                    reloader.reload("edit-set-view.fxml", (Stage)mainPane.getScene().getWindow());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {

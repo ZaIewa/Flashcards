@@ -2,7 +2,6 @@ package flashcards_p;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,6 +20,7 @@ public class MainController {
     DeleteSet deleteSet = new DeleteSet();
     Reloader reloader = new Reloader();
     CreateSet createSet = new CreateSet();
+    DataSingleton dataSingleton = DataSingleton.getInstance();
 
     private Stage stage;
     private Scene scene;
@@ -47,13 +47,13 @@ public class MainController {
 
             // Creates containers for names
             HBox hBoxNames = new HBox();
-            hBoxNames.setMinWidth(280);
+            hBoxNames.setMinWidth(140);
             hBoxNames.setSpacing(20);
 
             // Creates containers for buttons
             HBox hBoxButtons = new HBox();
-            hBoxButtons.setMinWidth(280);
-            hBoxButtons.setSpacing(20);
+            hBoxButtons.setMinWidth(420);
+            hBoxButtons.setSpacing(10);
             hBoxButtons.setAlignment(Pos.CENTER_RIGHT);
 
             mainVbox.getChildren().add(hBoxMain);
@@ -63,20 +63,52 @@ public class MainController {
             Label label = new Label(sets[i]);
             hBoxNames.getChildren().add(label);
 
+            int finalI = i;
+
+            Button polishButton = new Button();
+            polishButton.setText("Show Polish");
+            polishButton.setOnAction(e -> {
+                dataSingleton.setSetName(sets[finalI]);
+                dataSingleton.setLanguage("Polish");
+                try {
+                    reloader.reload("quiz-view.fxml", (Stage)mainPane.getScene().getWindow());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            hBoxButtons.getChildren().add(polishButton);
+
+            Button englishButton = new Button();
+            englishButton.setText("Show English");
+            englishButton.setOnAction(e -> {
+                dataSingleton.setSetName(sets[finalI]);
+                dataSingleton.setLanguage("English");
+                try {
+                    reloader.reload("quiz-view.fxml", (Stage)mainPane.getScene().getWindow());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            hBoxButtons.getChildren().add(englishButton);
+
             // Creates Edit buttons that on press change scene to edit-set-view.fxml of respective set
             Button editbutton = new Button();
             editbutton.setText("Edit");
-            int finalI = i;
             editbutton.setOnAction(e -> {
                 try {
-                    reloader.reloadEditSet(sets[finalI], (Stage)mainPane.getScene().getWindow());
+                    dataSingleton.setSetName(sets[finalI]);
+                    reloader.reload("edit-set-view.fxml", (Stage)mainPane.getScene().getWindow());
                 } catch (IOException | SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             });
+            hBoxButtons.getChildren().add(editbutton);
 
             // Creates Delete buttons that on press will delete respective set of flashcards
-            hBoxButtons.getChildren().add(editbutton);
             Button deletebutton = new Button();
             deletebutton.setText("Delete");
             deletebutton.setOnAction(e -> {
@@ -100,20 +132,6 @@ public class MainController {
     public void onAddButtonPress(ActionEvent actionEvent) throws SQLException, IOException {
         createSet.create(textField.getText());
         reloader.reload("main-view.fxml", (Stage)mainPane.getScene().getWindow());
-    }
-
-    // Switches scene into edit-scene-view.fxml and runs methods to set up the scene.
-    public void switchToEditSet(String SetName) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit-set-view.fxml"));
-        root = fxmlLoader.load();
-        EditSetController editSetController = fxmlLoader.<EditSetController>getController();
-        editSetController.setSetName(SetName);
-        editSetController.loadEditSet();
-
-        stage = (Stage)mainPane.getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
 }
